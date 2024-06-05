@@ -1,6 +1,6 @@
 ﻿using BookBarn.Domain.Entities;
-using System.Collections.Generic;
-using System.Reflection.Emit;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore;
 
 namespace BookBarn.Infrastructure.Context
 {

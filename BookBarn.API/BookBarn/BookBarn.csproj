@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookBarn.Domain\BookBarn.Domain.csproj" />
+    <ProjectReference Include="..\BookBarn.Infrastructure\BookBarn.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
