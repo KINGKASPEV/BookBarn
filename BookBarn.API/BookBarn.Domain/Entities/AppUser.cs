@@ -11,6 +11,7 @@ namespace BookBarn.Domain.Entities
         public DateTime? ResetTokenExpires { get; set; }
         public string ImageUrl { get; set; } = string.Empty;
         public DateTime DateModified { get; set; }
-        public ICollection<Cart> Carts { get; set; } 
+        public ICollection<Cart> Carts { get; set; }
+        public ICollection<PurchaseHistory> PurchaseHistories { get; set; }
     }
 }
