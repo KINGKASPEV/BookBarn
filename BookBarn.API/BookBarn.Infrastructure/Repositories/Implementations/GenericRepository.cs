@@ -13,9 +13,9 @@ namespace BookBarn.Infrastructure.Repositories.Implementations
 
         public async Task AddAsync(T entity) => await _dbContext.Set<T>().AddAsync(entity);
 
-        public void DeleteAllAsync(List<T> entities) => _dbContext.Set<T>().RemoveRange(entities);
+        public void DeleteAll(List<T> entities) => _dbContext.Set<T>().RemoveRange(entities);
 
-        public void DeleteAsync(T entity) => _dbContext.Set<T>().Remove(entity);
+        public void Delete(T entity) => _dbContext.Set<T>().Remove(entity);
 
         public async Task<List<T>> FindAsync(Expression<Func<T, bool>> expression) => await _dbContext.Set<T>().Where(expression).ToListAsync();
 

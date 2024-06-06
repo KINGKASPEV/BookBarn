@@ -9,8 +9,8 @@ namespace BookBarn.Infrastructure.Repositories.Interfaces
         Task<List<T>> FindAsync(Expression<Func<T, bool>> expression);
         Task AddAsync(T entity);
         void Update(T entity);
-        void DeleteAsync(T entity);
-        void DeleteAllAsync(List<T> entities);
+        void Delete(T entity);
+        void DeleteAll(List<T> entities);
         Task<int> SaveChangesAsync();
         Task<T> FindSingleAsync(Expression<Func<T, bool>> expression);
     }

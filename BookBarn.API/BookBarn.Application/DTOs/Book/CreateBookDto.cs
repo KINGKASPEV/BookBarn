@@ -7,6 +7,8 @@
         public string ISBN { get; set; }
         public string Author { get; set; }
         public int PublicationYear { get; set; }
-        public DateTime CreatedAt { get; set; } = DateTime.Now;
+        public double Price { get; set; }
+        public int Quantity { get; set; }
+        public string ImageUrl { get; set; }
     }
 }

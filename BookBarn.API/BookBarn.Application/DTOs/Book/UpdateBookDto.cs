@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BookBarn.Application.DTOs.Book
+﻿namespace BookBarn.Application.DTOs.Book
 {
-    internal class UpdateBookDto
+    public class UpdateBookDto : CreateBookDto
     {
+        public string Id { get; set; }
     }
 }

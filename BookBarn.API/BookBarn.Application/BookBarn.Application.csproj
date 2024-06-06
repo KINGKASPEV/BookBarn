@@ -7,11 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="DTOs\Cart\" />
+    <PackageReference Include="AutoMapper" Version="13.0.1" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\BookBarn.Domain\BookBarn.Domain.csproj" />
+    <ProjectReference Include="..\BookBarn.Infrastructure\BookBarn.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>
