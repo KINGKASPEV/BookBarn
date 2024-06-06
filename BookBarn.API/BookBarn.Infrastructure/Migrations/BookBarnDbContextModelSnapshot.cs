@@ -158,7 +158,7 @@ namespace BookBarn.Infrastructure.Migrations
 
                     b.HasIndex("PurchaseHistoryId");
 
-                    b.ToTable("Books");
+                    b.ToTable("Books", (string)null);
                 });
 
             modelBuilder.Entity("BookBarn.Domain.Entities.Cart", b =>
@@ -182,7 +182,7 @@ namespace BookBarn.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("Carts");
+                    b.ToTable("Carts", (string)null);
                 });
 
             modelBuilder.Entity("BookBarn.Domain.Entities.PurchaseHistory", b =>
@@ -209,7 +209,7 @@ namespace BookBarn.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.ToTable("PurchaseHistories");
+                    b.ToTable("PurchaseHistories", (string)null);
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
