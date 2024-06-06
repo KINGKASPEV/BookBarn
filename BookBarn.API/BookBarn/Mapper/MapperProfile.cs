@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using BookBarn.Application.DTOs.Book;
 using BookBarn.Domain.Entities;
 
 namespace BookBarn.Mapper
@@ -7,9 +8,9 @@ namespace BookBarn.Mapper
     {
         public MapperProfile()
         {
-            //CreateMap<Book, BookDto>().ReverseMap();
-            //CreateMap<Book, CreateBookDto>().ReverseMap();
-            //CreateMap<Book, UpdateBookDto>().ReverseMap();
+            CreateMap<Book, BookDto>().ReverseMap();
+            CreateMap<Book, CreateBookDto>().ReverseMap();
+            CreateMap<Book, UpdateBookDto>().ReverseMap();
         }
     }
 }

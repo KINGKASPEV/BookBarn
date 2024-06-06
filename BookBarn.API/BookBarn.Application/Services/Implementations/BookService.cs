@@ -1,33 +1,74 @@
-﻿using BookBarn.Application.Services.Interfaces;
+﻿using AutoMapper;
+using BookBarn.Application.DTOs.Book;
+using BookBarn.Application.Services.Interfaces;
+using BookBarn.Domain;
 using BookBarn.Domain.Entities;
+using BookBarn.Infrastructure.Repositories.Interfaces;
 
 namespace BookBarn.Application.Services.Implementations
 {
     public class BookService : IBookService
     {
-        public Task AddBookAsync(Book book)
+        private readonly IGenericRepository<Book> _bookRepository;
+        private readonly IMapper _mapper;
+
+        public BookService(IGenericRepository<Book> bookRepository, IMapper mapper)
         {
-            throw new NotImplementedException();
+            _bookRepository = bookRepository;
+            _mapper = mapper;
         }
 
-        public Task DeleteBookAsync(string id)
+        public async Task<ApiResponse<BookDto>> AddBookAsync(CreateBookDto createBookDto)
         {
-            throw new NotImplementedException();
+            var book = _mapper.Map<Book>(createBookDto);
+            await _bookRepository.AddAsync(book);
+            await _bookRepository.SaveChangesAsync();
+            var bookDto = _mapper.Map<BookDto>(book);
+            return ApiResponse<BookDto>.Success(bookDto, "Book added successfully", 201);
         }
 
-        public Task<IEnumerable<Book>> GetAllBooksAsync()
+        public async Task<ApiResponse<bool>> DeleteBookAsync(string id)
         {
-            throw new NotImplementedException();
+            var book = await _bookRepository.GetByIdAsync(id);
+            if (book == null)
+            {
+                return ApiResponse<bool>.Failed(false, "Book not found", 404, new List<string> { "Book not found" });
+            }
+            _bookRepository.Delete(book);
+            await _bookRepository.SaveChangesAsync();
+            return ApiResponse<bool>.Success(true, "Book deleted successfully", 200);
         }
 
-        public Task<Book> GetBookByIdAsync(string id)
+        public async Task<ApiResponse<IEnumerable<BookDto>>> GetAllBooksAsync()
         {
-            throw new NotImplementedException();
+            var books = await _bookRepository.GetAllAsync();
+            var bookDtos = _mapper.Map<IEnumerable<BookDto>>(books);
+            return ApiResponse<IEnumerable<BookDto>>.Success(bookDtos, "Books retrieved successfully", 200);
         }
 
-        public Task UpdateBookAsync(Book book)
+        public async Task<ApiResponse<BookDto>> GetBookByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var book = await _bookRepository.GetByIdAsync(id);
+            if (book == null)
+            {
+                return ApiResponse<BookDto>.Failed(false, "Book not found", 404, new List<string> { "Book not found" });
+            }
+            var bookDto = _mapper.Map<BookDto>(book);
+            return ApiResponse<BookDto>.Success(bookDto, "Book retrieved successfully", 200);
+        }
+
+        public async Task<ApiResponse<BookDto>> UpdateBookAsync(UpdateBookDto updateBookDto)
+        {
+            var book = await _bookRepository.GetByIdAsync(updateBookDto.Id);
+            if (book == null)
+            {
+                return ApiResponse<BookDto>.Failed(false, "Book not found", 404, new List<string> { "Book not found" });
+            }
+            _mapper.Map(updateBookDto, book);
+            _bookRepository.Update(book);
+            await _bookRepository.SaveChangesAsync();
+            var bookDto = _mapper.Map<BookDto>(book);
+            return ApiResponse<BookDto>.Success(bookDto, "Book updated successfully", 200);
         }
     }
 }
