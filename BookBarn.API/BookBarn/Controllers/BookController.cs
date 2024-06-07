@@ -1,8 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using BookBarn.Application.DTOs.Book;
 using BookBarn.Application.Services.Interfaces;
-using BookBarn.Application.DTOs.Book;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BookBarn.Controllers
 {

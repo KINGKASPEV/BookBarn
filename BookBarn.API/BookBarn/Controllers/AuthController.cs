@@ -1,6 +1,5 @@
 ﻿using BookBarn.Application.DTOs.Auth;
 using BookBarn.Application.DTOs.User;
-using BookBarn.Application.Services.Implementations;
 using BookBarn.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -31,15 +30,6 @@ namespace BookBarn.Controllers
         public async Task<IActionResult> Login([FromBody] AppUserLoginDto loginDTO)
         {
             var response = await _authenticationService.LoginAsync(loginDTO);
-            if (response.Succeeded)
-                return Ok(response);
-            return BadRequest(response);
-        }
-
-        [HttpGet("getall")]
-        public async Task<IActionResult> GetAllUsers()
-        {
-            var response = await _authenticationService.GetAllUsersAsync();
             if (response.Succeeded)
                 return Ok(response);
             return BadRequest(response);
