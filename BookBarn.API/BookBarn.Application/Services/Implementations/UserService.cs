@@ -1,6 +1,8 @@
-﻿namespace BookBarn.Application.Services.Implementations
+﻿using BookBarn.Application.Services.Interfaces;
+
+namespace BookBarn.Application.Services.Implementations
 {
-    public class UserService
+    public class UserService : IUserService
     {
     }
 }

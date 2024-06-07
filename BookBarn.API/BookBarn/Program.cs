@@ -14,7 +14,9 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddDependencies(builder.Configuration);
 builder.Services.AddAutoMapper(typeof(MapperProfile));
+builder.Services.AuthenticationConfiguration(config);
 builder.Services.AddLoggingConfiguration(config);
+builder.Services.AddSwagger();
 
 
 var app = builder.Build();

@@ -5,6 +5,7 @@ using BookBarn.Application.Services.Interfaces;
 using BookBarn.Common.Utilities;
 using BookBarn.Domain;
 using BookBarn.Domain.Entities;
+using BookBarn.Infrastructure.Repositories.Interfaces;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
@@ -16,18 +17,20 @@ namespace BookBarn.Application.Services.Implementations
     {
         private readonly UserManager<AppUser> _userManager;
         private readonly SignInManager<AppUser> _signInManager;
+        private readonly IGenericRepository<AppUser> _userRepository;
         private readonly ILogger<AuthService> _logger;
         private readonly IConfiguration _config;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IMapper _mapper;
 
         public AuthService(UserManager<AppUser> userManager,
-            SignInManager<AppUser> signInManager,
+            SignInManager<AppUser> signInManager, IGenericRepository<AppUser> userRepository,
             ILogger<AuthService> logger,
             IConfiguration config, RoleManager<IdentityRole> roleManager, IMapper mapper)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _userRepository = userRepository;
             _logger = logger;
             _config = config;
             _roleManager = roleManager;
@@ -51,7 +54,13 @@ namespace BookBarn.Application.Services.Implementations
                     await _roleManager.CreateAsync(new IdentityRole("User"));
 
                 await _userManager.AddToRoleAsync(user, "User");
+
+                // Fetch the user's roles
+                var roles = await _userManager.GetRolesAsync(user);
+                var primaryRole = roles.FirstOrDefault();
+
                 var userResponseDto = _mapper.Map<UserResponseDto>(user);
+                userResponseDto.Role = primaryRole;
 
                 return ApiResponse<UserResponseDto>.Success(userResponseDto, "User registered successfully.", 200);
             }
@@ -103,6 +112,30 @@ namespace BookBarn.Application.Services.Implementations
             {
                 _logger.LogError(ex, "Some error occurred while logging in." + ex.Message);
                 return ApiResponse<LoginResponseDto>.Failed(false, "Some error occurred while logging in." + ex.Message, StatusCodes.Status500InternalServerError, new List<string>() { ex.Message });
+            }
+        }
+
+        public async Task<ApiResponse<IEnumerable<UserResponseDto>>> GetAllUsersAsync()
+        {
+            try
+            {
+                var allUsers = await _userRepository.GetAllAsync();
+
+                var userDtos = new List<UserResponseDto>();
+                foreach (var user in allUsers)
+                {
+                    var roles = await _userManager.GetRolesAsync(user);
+                    var userDto = _mapper.Map<UserResponseDto>(user);
+                    userDto.Role = roles.FirstOrDefault();
+                    userDtos.Add(userDto);
+                }
+
+                return ApiResponse<IEnumerable<UserResponseDto>>.Success(userDtos, "Users retrieved successfully", StatusCodes.Status200OK);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError($"An error occurred while retrieving users: {ex.Message}");
+                return ApiResponse<IEnumerable<UserResponseDto>>.Failed(false, "An error occurred while retrieving users", StatusCodes.Status500InternalServerError, new List<string> { ex.Message });
             }
         }
 

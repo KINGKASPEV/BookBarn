@@ -12,15 +12,15 @@ namespace BookBarn.Controllers
     {
         private readonly IAuthService _authenticationService;
 
-        public AuthController(AuthService authenticationService)
+        public AuthController(IAuthService authenticationService)
         {
             _authenticationService = authenticationService;
         }
 
-        [HttpPost("create-user")]
-        public async Task<IActionResult> CreateUserAdmin([FromBody] RegisterUserDto createUserAdminDto)
+        [HttpPost("register")]
+        public async Task<IActionResult> CreateUser([FromBody] RegisterUserDto registerUserDto)
         {
-            var response = await _authenticationService.RegisterUserAsync(createUserAdminDto);
+            var response = await _authenticationService.RegisterUserAsync(registerUserDto);
 
             if (response.Succeeded)
                 return Ok(response);
@@ -31,6 +31,15 @@ namespace BookBarn.Controllers
         public async Task<IActionResult> Login([FromBody] AppUserLoginDto loginDTO)
         {
             var response = await _authenticationService.LoginAsync(loginDTO);
+            if (response.Succeeded)
+                return Ok(response);
+            return BadRequest(response);
+        }
+
+        [HttpGet("getall")]
+        public async Task<IActionResult> GetAllUsers()
+        {
+            var response = await _authenticationService.GetAllUsersAsync();
             if (response.Succeeded)
                 return Ok(response);
             return BadRequest(response);

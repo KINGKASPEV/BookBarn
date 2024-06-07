@@ -8,6 +8,7 @@ namespace BookBarn.Application.Services.Interfaces
     {
         Task<ApiResponse<UserResponseDto>> RegisterUserAsync(RegisterUserDto registerUserDto);
         Task<ApiResponse<LoginResponseDto>> LoginAsync(AppUserLoginDto loginDTO);
+        Task<ApiResponse<IEnumerable<UserResponseDto>>> GetAllUsersAsync();
         Task<ApiResponse<string>> LogoutAsync();
     }
 }

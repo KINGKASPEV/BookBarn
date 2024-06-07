@@ -2,6 +2,7 @@
 using BookBarn.Application.Services.Interfaces;
 using BookBarn.Application.DTOs.Book;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BookBarn.Controllers
 {
@@ -17,6 +18,7 @@ namespace BookBarn.Controllers
         }
 
         [HttpPost("add")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> AddBook([FromBody] CreateBookDto createBookDto)
         {
             var response = await _bookService.AddBookAsync(createBookDto);
@@ -26,6 +28,7 @@ namespace BookBarn.Controllers
         }
 
         [HttpDelete("{id}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> DeleteBook(string id)
         {
             var response = await _bookService.DeleteBookAsync(id);
@@ -35,6 +38,7 @@ namespace BookBarn.Controllers
         }
 
         [HttpGet("getall")]
+        [Authorize]
         public async Task<IActionResult> GetAllBooks()
         {
             var response = await _bookService.GetAllBooksAsync();
@@ -44,6 +48,7 @@ namespace BookBarn.Controllers
         }
 
         [HttpGet("{id}")]
+        [Authorize]
         public async Task<IActionResult> GetBookById(string id)
         {
             var response = await _bookService.GetBookByIdAsync(id);
@@ -53,6 +58,7 @@ namespace BookBarn.Controllers
         }
 
         [HttpPut("update/{bookId}")]
+        [Authorize(Roles = "Admin")]
         public async Task<IActionResult> UpdateBook(string bookId, [FromBody] UpdateBookDto updateBookDto)
         {
             var response = await _bookService.UpdateBookAsync(bookId, updateBookDto);
@@ -63,6 +69,7 @@ namespace BookBarn.Controllers
 
 
         [HttpGet("search")]
+        [Authorize]
         public async Task<IActionResult> SearchBooks([FromQuery] string searchTerm)
         {
             var response = await _bookService.SearchBooksAsync(searchTerm);

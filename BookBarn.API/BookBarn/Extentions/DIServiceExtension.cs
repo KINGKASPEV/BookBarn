@@ -14,6 +14,8 @@ namespace BookBarn.Extentions
         public static void AddDependencies(this IServiceCollection services, IConfiguration config)
         {
             services.AddScoped<IBookService, BookService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<IUserService, UserService>();
             services.AddScoped<ICartService, CartService>();
             services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
             services.AddScoped<RoleManager<IdentityRole>>();
