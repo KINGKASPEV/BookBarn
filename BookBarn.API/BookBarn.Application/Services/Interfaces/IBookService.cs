@@ -9,7 +9,7 @@ namespace BookBarn.Application.Services.Interfaces
         Task<ApiResponse<IEnumerable<BookDto>>> GetAllBooksAsync();
         Task<ApiResponse<BookDto>> GetBookByIdAsync(string id);
         Task<ApiResponse<BookDto>> AddBookAsync(CreateBookDto createBookDto);
-        Task<ApiResponse<BookDto>> UpdateBookAsync(UpdateBookDto updateBookDto);
+        Task<ApiResponse<BookDto>> UpdateBookAsync(string bookId, UpdateBookDto updateBookDto);
         Task<ApiResponse<bool>> DeleteBookAsync(string id);
         Task<ApiResponse<IEnumerable<BookDto>>> SearchBooksAsync(string searchTerm);
     }

@@ -8,6 +8,7 @@
 
   <ItemGroup>
     <PackageReference Include="AutoMapper" Version="13.0.1" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="8.0.6">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
@@ -24,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\BookBarn.Application\BookBarn.Application.csproj" />
+    <ProjectReference Include="..\BookBarn.Common\BookBarn.Common.csproj" />
     <ProjectReference Include="..\BookBarn.Domain\BookBarn.Domain.csproj" />
     <ProjectReference Include="..\BookBarn.Infrastructure\BookBarn.Infrastructure.csproj" />
   </ItemGroup>

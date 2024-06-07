@@ -92,11 +92,11 @@ namespace BookBarn.Application.Services.Implementations
             }
         }
 
-        public async Task<ApiResponse<BookDto>> UpdateBookAsync(UpdateBookDto updateBookDto)
+        public async Task<ApiResponse<BookDto>> UpdateBookAsync(string bookId, UpdateBookDto updateBookDto)
         {
             try
             {
-                var book = await _bookRepository.GetByIdAsync(updateBookDto.Id);
+                var book = await _bookRepository.GetByIdAsync(bookId);
                 if (book == null)
                 {
                     return ApiResponse<BookDto>.Failed(false, "Book not found", 404, new List<string> { "Book not found" });
@@ -109,7 +109,7 @@ namespace BookBarn.Application.Services.Implementations
             }
             catch (Exception ex)
             {
-                _logger.LogError(ex, $"Error occurred while updating the book with id {updateBookDto.Id}.");
+                _logger.LogError(ex, $"Error occurred while updating the book with id {bookId}.");
                 return ApiResponse<BookDto>.Failed(false, "An error occurred while updating the book.", 500, new List<string> { ex.Message });
             }
         }

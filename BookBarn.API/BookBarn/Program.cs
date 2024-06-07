@@ -1,3 +1,4 @@
+using BookBarn.Common.Utilities;
 using BookBarn.Configurations;
 using BookBarn.Extentions;
 using BookBarn.Mapper;
@@ -25,6 +26,11 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+using (var scope = app.Services.CreateScope())
+{
+    var serviceProvider = scope.ServiceProvider;
+    await Seeder.SeedRolesAndAdmins(serviceProvider);
+}
 app.UseHttpsRedirection();
 
 app.UseAuthorization();
