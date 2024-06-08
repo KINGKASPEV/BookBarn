@@ -63,7 +63,7 @@ Key Features
 => Auth Service
 1. RegisterAsync: User Registration.
 2. LoginAsync : Sign in a user into the system.
-3. Logout : Sigh out a user .
+3. Logout : Sign out a user .
 
 
 => Book Service
