@@ -1,4 +1,5 @@
 ﻿using BookBarn.Application.DTOs.Cart;
+using BookBarn.Application.DTOs.Checkout;
 using BookBarn.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
@@ -77,5 +78,16 @@ namespace BookBarn.Controllers
                 return Ok(response);
             return BadRequest(response);
         }
+
+        [HttpPost("checkout/{cartId}")]
+        public async Task<IActionResult> Checkout(string cartId, [FromBody] CheckoutRequestDto checkoutRequestDto)
+        {
+            checkoutRequestDto.CartId = cartId; 
+            var response = await _cartService.CheckoutAsync(checkoutRequestDto);
+            if (response.Succeeded)
+                return Ok(response);
+            return BadRequest(response);
+        }
+
     }
 }

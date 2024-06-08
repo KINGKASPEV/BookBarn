@@ -2,6 +2,7 @@
 using BookBarn.Application.DTOs.Auth;
 using BookBarn.Application.DTOs.Book;
 using BookBarn.Application.DTOs.Cart;
+using BookBarn.Application.DTOs.Checkout;
 using BookBarn.Application.DTOs.User;
 using BookBarn.Domain.Entities;
 
@@ -29,6 +30,8 @@ namespace BookBarn.Mapper
             CreateMap<RegisterUserDto, AppUser>();
             CreateMap<RegisterUserDto, AppUser>()
            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
+            CreateMap<Checkout, CheckoutResponseDto>();
+            CreateMap<CheckoutRequestDto, Checkout>();
         }
     }
 }

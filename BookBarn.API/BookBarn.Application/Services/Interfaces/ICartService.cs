@@ -1,4 +1,5 @@
 ﻿using BookBarn.Application.DTOs.Cart;
+using BookBarn.Application.DTOs.Checkout;
 using BookBarn.Domain;
 
 namespace BookBarn.Application.Services.Interfaces
@@ -12,5 +13,6 @@ namespace BookBarn.Application.Services.Interfaces
         Task<ApiResponse<IEnumerable<CartDto>>> GetAllCartsAsync();
         Task<ApiResponse<CartDto>> GetCartByIdAsync(string id);
         Task<ApiResponse<CartDto>> UpdateCartAsync(UpdateCartDto updateCartDto);
+        Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(CheckoutRequestDto checkoutRequestDto);
     }
 }

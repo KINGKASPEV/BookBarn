@@ -5,6 +5,7 @@ using BookBarn.Domain.Entities;
 using BookBarn.Domain;
 using BookBarn.Infrastructure.Repositories.Interfaces;
 using Microsoft.Extensions.Logging;
+using BookBarn.Application.DTOs.Checkout;
 
 namespace BookBarn.Application.Services.Implementations
 {
@@ -12,13 +13,18 @@ namespace BookBarn.Application.Services.Implementations
     {
         private readonly IGenericRepository<Cart> _cartRepository;
         private readonly IGenericRepository<Book> _bookRepository;
+        private readonly IGenericRepository<Checkout> _checkoutRepository;
         private readonly IMapper _mapper;
         private readonly ILogger<CartService> _logger;
 
-        public CartService(IGenericRepository<Cart> cartRepository, IGenericRepository<Book> bookRepository, IMapper mapper, ILogger<CartService> logger)
+        public CartService(IGenericRepository<Cart> cartRepository, 
+            IGenericRepository<Book> bookRepository, 
+            IGenericRepository<Checkout> checkoutRepository, 
+            IMapper mapper, ILogger<CartService> logger)
         {
             _cartRepository = cartRepository;
             _bookRepository = bookRepository;
+            _checkoutRepository = checkoutRepository;
             _mapper = mapper;
             _logger = logger;
         }
@@ -199,6 +205,59 @@ namespace BookBarn.Application.Services.Implementations
             {
                 _logger.LogError(ex, $"Error occurred while updating the cart with id {updateCartDto.Id}.");
                 return ApiResponse<CartDto>.Failed(false, "An error occurred while updating the cart.", 500, new List<string> { ex.Message });
+            }
+        }
+        public async Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(CheckoutRequestDto checkoutRequestDto)
+        {
+            try
+            {
+                var cart = await _cartRepository.GetByIdAsync(checkoutRequestDto.CartId);
+                if (cart == null)
+                {
+                    return ApiResponse<CheckoutResponseDto>.Failed(false, "Cart not found", 404, new List<string> { "Cart not found" });
+                }
+
+                // Simulate different payment methods
+                string message = checkoutRequestDto.PaymentMethod switch
+                {
+                    "Web" => "Payment processed via Web.",
+                    "USSD" => "Payment processed via USSD.",
+                    "Transfer" => "Payment processed via Transfer.",
+                    _ => "Invalid payment method."
+                };
+
+                if (message == "Invalid payment method.")
+                {
+                    return ApiResponse<CheckoutResponseDto>.Failed(false, message, 400, new List<string> { message });
+                }
+
+                // Create a new Checkout entity
+                var checkout = new Checkout
+                {
+                    CartId = checkoutRequestDto.CartId,
+                    PaymentMethod = checkoutRequestDto.PaymentMethod,
+                    Status = "Success",
+                    CompletedAt = DateTime.UtcNow,
+                    Message = message
+                };
+
+                // Save the Checkout entity to the database
+                await _checkoutRepository.AddAsync(checkout);
+                await _checkoutRepository.SaveChangesAsync();
+
+                // Clear the cart or mark it as checked out
+                cart.Books.Clear();
+                _cartRepository.Update(cart);
+                await _cartRepository.SaveChangesAsync();
+
+                var checkoutResponse = _mapper.Map<CheckoutResponseDto>(checkout);
+
+                return ApiResponse<CheckoutResponseDto>.Success(checkoutResponse, "Checkout completed successfully", 200);
+            }
+            catch (Exception ex)
+            {
+                _logger.LogError(ex, "Error occurred during checkout.");
+                return ApiResponse<CheckoutResponseDto>.Failed(false, "An error occurred during checkout.", 500, new List<string> { ex.Message });
             }
         }
     }
