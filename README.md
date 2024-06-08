@@ -1,8 +1,15 @@
 BookBarn API
+
+
 Overview
+
+
 BookBarn is a comprehensive application for managing a book store, including features such as adding books to carts, checking out, and maintaining a purchase history. This documentation provides detailed instructions on setting up, building, and running the application.
 
+
 Prerequisites
+
+
 Before you begin, ensure you have the following installed:
 
 .NET SDK (version 8.0)
@@ -13,28 +20,35 @@ Microsoft.Extensions.Logging
 
 Getting Started
 
+
 Step 1: Clone the Repository
 Clone the BookBarn repository from GitHub to your local machine uisng the below snippet.
 git clone https://github.com/yourusername/BookBarn.git
 
+
 Step 2: Configure the Database
 Update the appsettings.json file in the BookBarn.API project with your database connection string and JWT Settings.
+
 
 Step 3: Apply Migrations
 Run the following command to apply the Entity Framework Core migrations and create the database schema.
 Update-database
 
+
 Step 4: Build the Application
 Build the application to detect any possible eeror.
 
+
 Step 5: Run the Application
 Run the application in your Visual Studio.
+
 
 Project Structure
 => BookBarn.API: The main entry point for the API.
 => BookBarn.Application: Contains the application logic, including services and DTOs.
 => BookBarn.Domain: Contains the domain entities and interfaces.
 => BookBarn.Infrastructure: Contains the repository implementations and database context.
+
 
 Key Features
 => Book Service
@@ -44,6 +58,7 @@ Key Features
 4. GetBookByIdAsync: Retrieves a book by its ID.
 5. UpdateBookAsync: Updates the details of an existing book.
 6. SearchBooksAsync: Searches for books by title, author, publication year, or genre.
+
 
 => Cart Service
 1. AddCartAsync: Adds a new cart with books.
@@ -55,8 +70,10 @@ Key Features
 7. UpdateCartAsync: Updates the books in a cart.
 8. CheckoutAsync: Processes the checkout and creates a purchase history.
 
+
 => Purchase History Service
 1. GetPurchaseHistoryAsync: Retrieves the purchase history for a user.
+
 
 Thought Process
 1. Setting Up Repositories: Created generic repository interfaces and implementations for basic CRUD operations.
@@ -69,4 +86,6 @@ Thought Process
 
 
 Conclusion
+
+
 By following this documentation, you should be able to set up, build, and run the BookBarn application successfully. The detailed project structure and thought process provide insights into the development and design decisions made throughout the project. If you encounter any issues, refer to the logs for troubleshooting.
