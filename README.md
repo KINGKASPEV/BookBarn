@@ -12,6 +12,7 @@ AutoMapper
 Microsoft.Extensions.Logging
 
 Getting Started
+
 Step 1: Clone the Repository
 Clone the BookBarn repository from GitHub to your local machine uisng the below snippet.
 git clone https://github.com/yourusername/BookBarn.git
