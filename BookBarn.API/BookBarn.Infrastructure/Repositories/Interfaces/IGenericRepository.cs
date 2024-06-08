@@ -6,7 +6,7 @@ namespace BookBarn.Infrastructure.Repositories.Interfaces
     {
         Task<T> GetByIdAsync(string id);
         Task<List<T>> GetAllAsync();
-        Task<List<T>> GetAllToIcludeAsync(params Expression<Func<T, object>>[] includes);
+        Task<List<T>> GetAllToIncludeAsync(params Expression<Func<T, object>>[] includes);
         Task<List<T>> FindAsync(Expression<Func<T, bool>> expression);
         Task<List<T>> FindAndIncludeAsync(Expression<Func<T, bool>> expression, params Expression<Func<T, object>>[] includes);
         Task AddAsync(T entity);

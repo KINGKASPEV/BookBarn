@@ -120,7 +120,7 @@ namespace BookBarn.Application.Services.Implementations
         {
             try
             {
-                var carts = await _cartRepository.GetAllToIcludeAsync(include => include.Books);
+                var carts = await _cartRepository.GetAllToIncludeAsync(null);
                 var cartDtos = _mapper.Map<IEnumerable<CartDto>>(carts);
                 return ApiResponse<IEnumerable<CartDto>>.Success(cartDtos, "Carts retrieved successfully", 200);
             }

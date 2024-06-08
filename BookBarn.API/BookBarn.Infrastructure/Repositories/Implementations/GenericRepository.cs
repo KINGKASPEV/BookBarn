@@ -33,7 +33,7 @@ namespace BookBarn.Infrastructure.Repositories.Implementations
         public async Task<T> FindSingleAsync(Expression<Func<T, bool>> expression) => await _dbContext.Set<T>().FirstOrDefaultAsync(expression);
 
         public async Task<List<T>> GetAllAsync() => await _dbContext.Set<T>().ToListAsync();
-        public async Task<List<T>> GetAllToIcludeAsync(params Expression<Func<T, object>>[] includes)
+        public async Task<List<T>> GetAllToIncludeAsync(params Expression<Func<T, object>>[] includes)
         {
             var query = _dbContext.Set<T>().AsQueryable();
             foreach (var include in includes)
