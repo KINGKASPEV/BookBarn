@@ -44,11 +44,6 @@ namespace BookBarn.Mapper
             .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => src.PurchaseDate))
             .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => src.Checkout.PaymentMethod))
             .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Checkout.Cart.Books));
-            //CreateMap<PurchaseHistory, PurchaseHistoryDto>()
-            //   .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Cart.Books));
-            //CreateMap<PurchaseHistory, PurchaseHistoryDto>()
-            //  .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Cart != null ? src.Cart.Books : null));
-
         }
     }
 }

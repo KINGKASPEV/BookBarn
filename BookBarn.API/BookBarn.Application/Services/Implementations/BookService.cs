@@ -118,13 +118,11 @@ namespace BookBarn.Application.Services.Implementations
         {
             try
             {
-                // Check if search term is provided
                 if (string.IsNullOrEmpty(searchTerm))
                 {
                     return ApiResponse<IEnumerable<BookDto>>.Failed(false, "Search term cannot be empty", 400, new List<string> { "Search term cannot be empty" });
                 }
 
-                // Search books by title, author, year, or genre
                 var books = await _bookRepository.FindAsync(book =>
                     book.Title.Contains(searchTerm) ||
                     book.Author.Contains(searchTerm) ||

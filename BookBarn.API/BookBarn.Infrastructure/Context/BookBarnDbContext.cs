@@ -17,31 +17,31 @@ namespace BookBarn.Infrastructure.Context
         {
             base.OnModelCreating(modelBuilder);
 
-            // Configure one-to-many relationship between AppUser and Cart
+            // One-to-many relationship between AppUser and Cart
             modelBuilder.Entity<Cart>()
                 .HasOne(c => c.AppUser)
                 .WithMany(u => u.Carts)
                 .HasForeignKey(c => c.AppUserId);
 
-            // Configure one-to-many relationship between Cart and Book
+            // One-to-many relationship between Cart and Book
             modelBuilder.Entity<Book>()
                 .HasOne(b => b.Cart)
                 .WithMany(c => c.Books)
                 .HasForeignKey(b => b.CartId);
 
-            // Configure one-to-many relationship between AppUser and PurchaseHistory
+            // One-to-many relationship between AppUser and PurchaseHistory
             modelBuilder.Entity<PurchaseHistory>()
                 .HasOne(ph => ph.AppUser)
                 .WithMany(u => u.PurchaseHistories)
                 .HasForeignKey(ph => ph.AppUserId);
 
-            // Configure one-to-many relationship between Cart and Checkout
+            // One-to-many relationship between Cart and Checkout
             modelBuilder.Entity<Checkout>()
                 .HasOne(co => co.Cart)
                 .WithMany(c => c.Checkouts)
                 .HasForeignKey(co => co.CartId);
 
-            // Configure one-to-many relationship between AppUser and Checkout
+            // One-to-many relationship between AppUser and Checkout
             modelBuilder.Entity<Checkout>()
                 .HasOne(co => co.AppUser)
                 .WithMany(u => u.Checkouts)
