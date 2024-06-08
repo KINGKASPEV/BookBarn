@@ -7,9 +7,11 @@ namespace BookBarn.Infrastructure.Context
     public class BookBarnDbContext : IdentityDbContext<AppUser>
     {
         public BookBarnDbContext(DbContextOptions<BookBarnDbContext> options) : base(options) { }
+
         public DbSet<Book> Books { get; set; }
         public DbSet<Cart> Carts { get; set; }
         public DbSet<PurchaseHistory> PurchaseHistories { get; set; }
+        public DbSet<Checkout> Checkouts { get; set; } 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -32,7 +34,12 @@ namespace BookBarn.Infrastructure.Context
                 .HasOne(ph => ph.AppUser)
                 .WithMany(u => u.PurchaseHistories)
                 .HasForeignKey(ph => ph.AppUserId);
-        }
 
+            // Configure one-to-many relationship between Cart and Checkout
+            modelBuilder.Entity<Checkout>()
+                .HasOne(co => co.Cart)
+                .WithMany(c => c.Checkouts)
+                .HasForeignKey(co => co.CartId);
+        }
     }
 }
