@@ -13,5 +13,6 @@ namespace BookBarn.Domain.Entities
         public DateTime DateModified { get; set; }
         public ICollection<Cart> Carts { get; set; }
         public ICollection<PurchaseHistory> PurchaseHistories { get; set; }
+        public ICollection<Checkout> Checkouts { get; set; }
     }
 }

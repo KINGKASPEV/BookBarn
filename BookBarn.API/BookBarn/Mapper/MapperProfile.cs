@@ -17,6 +17,8 @@ namespace BookBarn.Mapper
             CreateMap<Book, CreateBookDto>().ReverseMap();
             CreateMap<Book, UpdateBookDto>().ReverseMap();
             CreateMap<Cart, CartDto>();
+            CreateMap<Cart, CartDto>()
+            .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Books));
             CreateMap<CreateCartDto, Cart>();
             CreateMap<UpdateCartDto, Cart>();
             CreateMap<AppUser, UserResponseDto>();
@@ -33,8 +35,20 @@ namespace BookBarn.Mapper
            .ForMember(dest => dest.UserName, opt => opt.MapFrom(src => src.Email));
             CreateMap<Checkout, CheckoutResponseDto>();
             CreateMap<CheckoutRequestDto, Checkout>();
+            CreateMap<Checkout, CheckoutResponseDto>()
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId));
             CreateMap<PurchaseHistory, PurchaseHistoryDto>()
-               .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Cart.Books)); 
+            .ForMember(dest => dest.AppUserId, opt => opt.MapFrom(src => src.AppUserId))
+            .ForMember(dest => dest.CheckoutId, opt => opt.MapFrom(src => src.CheckoutId))
+            .ForMember(dest => dest.TotalAmount, opt => opt.MapFrom(src => src.TotalAmount))
+            .ForMember(dest => dest.PurchaseDate, opt => opt.MapFrom(src => src.PurchaseDate))
+            .ForMember(dest => dest.PaymentMethod, opt => opt.MapFrom(src => src.Checkout.PaymentMethod))
+            .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Checkout.Cart.Books));
+            //CreateMap<PurchaseHistory, PurchaseHistoryDto>()
+            //   .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Cart.Books));
+            //CreateMap<PurchaseHistory, PurchaseHistoryDto>()
+            //  .ForMember(dest => dest.Books, opt => opt.MapFrom(src => src.Cart != null ? src.Cart.Books : null));
+
         }
     }
 }

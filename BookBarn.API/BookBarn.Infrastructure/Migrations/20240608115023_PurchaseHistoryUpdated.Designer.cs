@@ -4,6 +4,7 @@ using BookBarn.Infrastructure.Context;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace BookBarn.Infrastructure.Migrations
 {
     [DbContext(typeof(BookBarnDbContext))]
-    partial class BookBarnDbContextModelSnapshot : ModelSnapshot
+    [Migration("20240608115023_PurchaseHistoryUpdated")]
+    partial class PurchaseHistoryUpdated
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -137,8 +140,8 @@ namespace BookBarn.Infrastructure.Migrations
                     b.Property<DateTime>("ModifiedAt")
                         .HasColumnType("datetime2");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("decimal(18,2)");
+                    b.Property<double>("Price")
+                        .HasColumnType("float");
 
                     b.Property<int>("PublicationYear")
                         .HasColumnType("int");
@@ -229,7 +232,7 @@ namespace BookBarn.Infrastructure.Migrations
                     b.Property<string>("AppUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<string>("CheckoutId")
+                    b.Property<string>("CartId")
                         .HasColumnType("nvarchar(450)");
 
                     b.Property<DateTime>("CreatedAt")
@@ -254,7 +257,7 @@ namespace BookBarn.Infrastructure.Migrations
 
                     b.HasIndex("AppUserId");
 
-                    b.HasIndex("CheckoutId");
+                    b.HasIndex("CartId");
 
                     b.ToTable("PurchaseHistories");
                 });
@@ -431,13 +434,13 @@ namespace BookBarn.Infrastructure.Migrations
                         .WithMany("PurchaseHistories")
                         .HasForeignKey("AppUserId");
 
-                    b.HasOne("BookBarn.Domain.Entities.Checkout", "Checkout")
+                    b.HasOne("BookBarn.Domain.Entities.Cart", "Cart")
                         .WithMany()
-                        .HasForeignKey("CheckoutId");
+                        .HasForeignKey("CartId");
 
                     b.Navigation("AppUser");
 
-                    b.Navigation("Checkout");
+                    b.Navigation("Cart");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>

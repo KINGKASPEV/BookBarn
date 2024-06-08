@@ -1,12 +1,12 @@
 ﻿using BookBarn.Application.Services.Interfaces;
-using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace BookBarn.Controllers
 {
     [Route("api/purchase-history")]
     [ApiController]
+    [Authorize]
     public class PurchaseHistoryController : ControllerBase
     {
         private readonly IPurchaseHistoryService _purchaseHistoryService;
@@ -17,14 +17,8 @@ namespace BookBarn.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetPurchaseHistory()
+        public async Task<IActionResult> GetPurchaseHistory(string userId)
         {
-            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier); 
-            if (userId == null)
-            {
-                return Unauthorized(new { message = "User is not authenticated" });
-            }
-
             var response = await _purchaseHistoryService.GetPurchaseHistoryAsync(userId);
             if (response.Succeeded)
                 return Ok(response);

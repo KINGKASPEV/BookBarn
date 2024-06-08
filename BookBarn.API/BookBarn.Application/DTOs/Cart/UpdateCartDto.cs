@@ -2,7 +2,7 @@
 {
     public class UpdateCartDto
     {
-        public string Id { get; set; }
+        public string CartId { get; set; }
         public ICollection<string> BookIds { get; set; }
     }
 }
