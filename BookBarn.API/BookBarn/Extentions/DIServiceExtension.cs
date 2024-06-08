@@ -13,6 +13,7 @@ namespace BookBarn.Extentions
     {
         public static void AddDependencies(this IServiceCollection services, IConfiguration config)
         {
+            services.AddScoped<IPurchaseHistoryService, PurchaseHistoryService>();
             services.AddScoped<IBookService, BookService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<IUserService, UserService>();
