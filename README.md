@@ -44,9 +44,17 @@ Run the application in your Visual Studio.
 
 
 Project Structure
+
+
 => BookBarn.API: The main entry point for the API.
+
+
 => BookBarn.Application: Contains the application logic, including services and DTOs.
+
+
 => BookBarn.Domain: Contains the domain entities and interfaces.
+
+
 => BookBarn.Infrastructure: Contains the repository implementations and database context.
 
 
