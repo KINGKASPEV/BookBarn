@@ -2,7 +2,7 @@
 {
     public class CheckoutRequestDto
     {
-        public string CartId { get; set; }
+        //public string CartId { get; set; }
         public string PaymentMethod { get; set; } // "Web", "USSD", "Transfer"
     }
 }

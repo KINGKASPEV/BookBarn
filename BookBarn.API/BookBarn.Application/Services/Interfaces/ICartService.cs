@@ -13,6 +13,6 @@ namespace BookBarn.Application.Services.Interfaces
         Task<ApiResponse<IEnumerable<CartDto>>> GetAllCartsAsync();
         Task<ApiResponse<CartDto>> GetCartByIdAsync(string id);
         Task<ApiResponse<CartDto>> UpdateCartAsync(UpdateCartDto updateCartDto);
-        Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(CheckoutRequestDto checkoutRequestDto);
+        Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(string cartId, CheckoutRequestDto checkoutRequestDto);
     }
 }

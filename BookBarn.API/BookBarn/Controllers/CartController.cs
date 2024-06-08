@@ -1,12 +1,14 @@
 ﻿using BookBarn.Application.DTOs.Cart;
 using BookBarn.Application.DTOs.Checkout;
 using BookBarn.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BookBarn.Controllers
 {
     [Route("api/cart")]
     [ApiController]
+    [Authorize]
     public class CartController : ControllerBase
     {
         private readonly ICartService _cartService;
@@ -82,8 +84,7 @@ namespace BookBarn.Controllers
         [HttpPost("checkout/{cartId}")]
         public async Task<IActionResult> Checkout(string cartId, [FromBody] CheckoutRequestDto checkoutRequestDto)
         {
-            checkoutRequestDto.CartId = cartId; 
-            var response = await _cartService.CheckoutAsync(checkoutRequestDto);
+            var response = await _cartService.CheckoutAsync(cartId, checkoutRequestDto);
             if (response.Succeeded)
                 return Ok(response);
             return BadRequest(response);

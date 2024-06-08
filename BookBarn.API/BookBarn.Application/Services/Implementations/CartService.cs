@@ -207,11 +207,12 @@ namespace BookBarn.Application.Services.Implementations
                 return ApiResponse<CartDto>.Failed(false, "An error occurred while updating the cart.", 500, new List<string> { ex.Message });
             }
         }
-        public async Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(CheckoutRequestDto checkoutRequestDto)
+
+        public async Task<ApiResponse<CheckoutResponseDto>> CheckoutAsync(string cartId, CheckoutRequestDto checkoutRequestDto)
         {
             try
             {
-                var cart = await _cartRepository.GetByIdAsync(checkoutRequestDto.CartId);
+                var cart = await _cartRepository.GetByIdAsync(cartId);
                 if (cart == null)
                 {
                     return ApiResponse<CheckoutResponseDto>.Failed(false, "Cart not found", 404, new List<string> { "Cart not found" });
@@ -234,7 +235,7 @@ namespace BookBarn.Application.Services.Implementations
                 // Create a new Checkout entity
                 var checkout = new Checkout
                 {
-                    CartId = checkoutRequestDto.CartId,
+                    CartId = cartId,
                     PaymentMethod = checkoutRequestDto.PaymentMethod,
                     Status = "Success",
                     CompletedAt = DateTime.UtcNow,
