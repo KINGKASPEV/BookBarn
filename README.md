@@ -59,6 +59,13 @@ Project Structure
 
 
 Key Features
+
+=> Auth Service
+1. RegisterAsync: User Registration.
+2. LoginAsync : Sign in a user into the system.
+3. Logout : Sigh out a user .
+
+
 => Book Service
 1. AddBookAsync: Adds a new book to the database.
 2. DeleteBookAsync: Deletes a book by its ID.
