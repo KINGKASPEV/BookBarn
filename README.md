@@ -1,36 +1,71 @@
-# BookBarn
-Online BookStore System
+BookBarn API
+Overview
+BookBarn is a comprehensive application for managing a book store, including features such as adding books to carts, checking out, and maintaining a purchase history. This documentation provides detailed instructions on setting up, building, and running the application.
 
-## To-do:
+Prerequisites
+Before you begin, ensure you have the following installed:
 
-1. Clone the repo
-2. Fetch all branches.
+.NET SDK (version 8.0)
+SQL Server (or a compatible database)
+Entity Framework Core
+AutoMapper
+Microsoft.Extensions.Logging
 
-- Run 'git fetch' on your gitbash/terminal
+Getting Started
+Step 1: Clone the Repository
+Clone the BookBarn repository from GitHub to your local machine uisng the below snippet.
+git clone https://github.com/yourusername/BookBarn.git
 
-3. Branch out to develop branch. Run 'git checkout develop'
-4. Branch out to your own branch.
+Step 2: Configure the Database
+Update the appsettings.json file in the BookBarn.API project with your database connection string and JWT Settings.
 
-- Run 'git checkout -b ft-taskName'
+Step 3: Apply Migrations
+Run the following command to apply the Entity Framework Core migrations and create the database schema.
+Update-database
 
-Note:
+Step 4: Build the Application
+Build the application to detect any possible eeror.
 
-- Name your branches as:
-  -- 'ft-taskname' for new features.
+Step 5: Run the Application
+Run the application in your Visual Studio.
 
-E.g. ft-login, ft-database-setup
--- 'bg-bug-fixed' for bug fixes.
+Project Structure
+=> BookBarn.API: The main entry point for the API.
+=> BookBarn.Application: Contains the application logic, including services and DTOs.
+=> BookBarn.Domain: Contains the domain entities and interfaces.
+=> BookBarn.Infrastructure: Contains the repository implementations and database context.
 
-E.g. bg-fix-add-user-bug, bg-fix-otp-bug
+Key Features
+=> Book Service
+1. AddBookAsync: Adds a new book to the database.
+2. DeleteBookAsync: Deletes a book by its ID.
+3. GetAllBooksAsync: Retrieves all books.
+4. GetBookByIdAsync: Retrieves a book by its ID.
+5. UpdateBookAsync: Updates the details of an existing book.
+6. SearchBooksAsync: Searches for books by title, author, publication year, or genre.
 
-Your PR should be descriptive enough for the task you implement.
+=> Cart Service
+1. AddCartAsync: Adds a new cart with books.
+2. AddBookToCartAsync: Adds a book to an existing cart.
+3. DeleteCartAsync: Deletes a cart.
+4. GetAllCartsAsync: Retrieves all carts with included books.
+5. GetCartByIdAsync: Retrieves a cart by its ID.
+6. RemoveBookFromCartAsync: Removes a book from a cart.
+7. UpdateCartAsync: Updates the books in a cart.
+8. CheckoutAsync: Processes the checkout and creates a purchase history.
 
-Best Practices
+=> Purchase History Service
+1. GetPurchaseHistoryAsync: Retrieves the purchase history for a user.
 
-- Commit and push to your branch regularly. (Every day during your active sprint)
-- Always Pull from the origin before pushing your code
+Thought Process
+1. Setting Up Repositories: Created generic repository interfaces and implementations for basic CRUD operations.
+2. Entities and DTOs: Defined entities for Cart, Book, Checkout, and PurchaseHistory. Created corresponding DTOs for data transfer.
+3. Mapping: Configured AutoMapper profiles to map between entities and DTOs.
+4. Services: Implemented services for cart management and purchase history retrieval, ensuring all necessary business logic and error handling are in place.
+5. Logging: Integrated logging to capture errors and important events for troubleshooting.
+6. Database: Utilized Entity Framework Core for database interactions and applied migrations to create the schema.
+7. API Endpoints: Exposed API endpoints to perform CRUD operations on Book, carts, handle checkouts, and retrieve purchase histories.
 
-E.g. Run 'git pull origin develop' after you've commited your changes, Just before pushing. Do this every time you made changes
 
-- Resolve all conflicts before pushing your code to the remote repository.
-- Communicate regularly with your team members.
+Conclusion
+By following this documentation, you should be able to set up, build, and run the BookBarn application successfully. The detailed project structure and thought process provide insights into the development and design decisions made throughout the project. If you encounter any issues, refer to the logs for troubleshooting.
