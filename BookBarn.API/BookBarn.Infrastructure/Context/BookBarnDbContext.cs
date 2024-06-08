@@ -50,6 +50,7 @@ namespace BookBarn.Infrastructure.Context
             modelBuilder.Entity<PurchaseHistory>()
                 .Property(ph => ph.TotalAmount)
                 .HasColumnType("decimal(18,2)");
+
             modelBuilder.Entity<Book>()
                 .Property(ph => ph.Price)
                 .HasColumnType("decimal(18,2)");
